@@ -65,8 +65,8 @@ def write_csv(filename, url):
 
 def download_pulses_wise():
     single_seller = list(sellers.items())[0]
-    limited_commodities = list(commodities.items())[10:20]
-    limited_centres = list(centres.items())[10:20]
+    limited_commodities = list(commodities.items())[:10]
+    limited_centres = list(centres.items())[:10]
     
     for seller_type, seller_id in single_seller:
         for commodity_type, commodity_id in limited_commodities:
