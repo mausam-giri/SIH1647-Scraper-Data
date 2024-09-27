@@ -1,5 +1,5 @@
 id,date,commodity_group,commodity_id,commodity,zone,centre_id,centre,price
-1931097,2015-12-04,"Grains & Pulses",1,"Atta (Wheat)","South Zone",1,Adilabad,29
+1928228,2015-12-02,"Grains & Pulses",1,"Atta (Wheat)","South Zone",1,Adilabad,29
 1932607,2015-12-05,"Grains & Pulses",1,"Atta (Wheat)","South Zone",1,Adilabad,29
 1933751,2015-12-06,"Grains & Pulses",1,"Atta (Wheat)","South Zone",1,Adilabad,29
 1934443,2015-12-07,"Grains & Pulses",1,"Atta (Wheat)","South Zone",1,Adilabad,29
@@ -28,4 +28,4 @@ id,date,commodity_group,commodity_id,commodity,zone,centre_id,centre,price
 1963929,2015-12-30,"Grains & Pulses",1,"Atta (Wheat)","South Zone",1,Adilabad,29
 1965578,2015-12-31,"Grains & Pulses",1,"Atta (Wheat)","South Zone",1,Adilabad,29
 1929694,2015-12-03,"Grains & Pulses",1,"Atta (Wheat)","South Zone",1,Adilabad,29
-1928228,2015-12-02,"Grains & Pulses",1,"Atta (Wheat)","South Zone",1,Adilabad,29
+1931097,2015-12-04,"Grains & Pulses",1,"Atta (Wheat)","South Zone",1,Adilabad,29

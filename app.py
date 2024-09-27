@@ -3,6 +3,8 @@ import requests
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from urllib.parse import urljoin, urlencode
 from DCA_Data import sellers, commodities, centres, years
+import aiohttp
+import asyncio
 
 base_url = "https://dca.ceda.ashoka.edu.in/index.php/home/"
 endpoint = "getcsv"
@@ -53,18 +55,29 @@ def downloader(filename, url):
             fp.write(f"{url}\n")
         return error_message
 
+def write_csv(filename, url):
+    file_based = [x for x in filename.split("/") if x]
+    endpoint = url.split("?").pop()
+    file_based.append(endpoint)
+
+    with open("DownloadLinks.csv", "a+") as fp:
+        fp.write(f"{",".join(file_based)}\n")
+
 def download_pulses_wise():
     for seller_type, seller_id in sellers.items():
         for commodity_type, commodity_id in commodities.items():
             for centre_type, centre_id in centres.items():
                 for year_type, year_id in years.items():
-                    params = update_params(commodity_type, centre_type, seller_type, year_type)
-                    url = get_url(params)
-                    filename = f"./{seller_type.title()}/{commodity_type}/{centre_type}/{year_type}"
-                    
-                    result = downloader(filename, url)
-                    
-                    print(f"[{seller_type.title()}] {commodity_type} - {centre_type} {year_type}: {result}")
+                    if centre_type not in ["Adilabad", "Agar Malwa", "Agartala"]:
+                        params = update_params(commodity_type, centre_type, seller_type, year_type)
+                        url = get_url(params)
+                        filename = f"./{seller_type.title()}/{commodity_type}/{centre_type}/{year_type}"
+                        write_csv(filename, url)
+                        print(f"[{seller_type.title()}] {commodity_type} - {centre_type} {year_type}", end="/r")
+                        result = downloader(filename, url)
+                        print(f"[{seller_type.title()}] {commodity_type} - {centre_type} {year_type}: {result}")
+                    else:
+                        pass
 
 def download_pulses_wise_v1():
     with ThreadPoolExecutor(max_workers=5) as executor:
@@ -76,12 +89,14 @@ def download_pulses_wise_v1():
                         params = update_params(commodity_type, centre_type, seller_type, year_type)
                         url = get_url(params)
                         filename = f"./{seller_type.title()}/{commodity_type}/{centre_type}/{year_type}"
+                        print(f"[[+] {seller_type.title()}] {commodity_type} - {centre_type} {year_type}")
                         futures.append(executor.submit(downloader, filename, url))
 
         for future, seller_type, commodity_type, centre_type, year_type in as_completed(futures):
             result = future.result()
             print(f"[{seller_type.title()}] {commodity_type} - {centre_type} {year_type}: {result}")
 
-
 if __name__ == "__main__":
+    print("Starting: Scrapper")
     download_pulses_wise()
+    # asyncio.run(download_pulses_wise_v4())
