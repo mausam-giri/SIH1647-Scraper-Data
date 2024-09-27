@@ -64,11 +64,15 @@ def write_csv(filename, url):
         fp.write(f"{",".join(file_based)}\n")
 
 def download_pulses_wise():
+    single_seller = list(sellers.items())[0]
+    limited_commodities = list(commodities.items())[:10]
+    limited_centres = list(centres.items())[:10]
+    
     for seller_type, seller_id in sellers.items():
         for commodity_type, commodity_id in commodities.items():
             for centre_type, centre_id in centres.items():
                 for year_type, year_id in years.items():
-                    if centre_type not in ["Adilabad", "Agar Malwa", "Agartala"]:
+                    if centre_type not in ["nothing"]:
                         params = update_params(commodity_type, centre_type, seller_type, year_type)
                         url = get_url(params)
                         filename = f"./{seller_type.title()}/{commodity_type}/{centre_type}/{year_type}"
